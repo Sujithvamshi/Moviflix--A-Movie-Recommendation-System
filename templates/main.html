@@ -13,14 +13,32 @@
           </form>
     </div>
 </div>
-<div class="container-1">
-    {%for i in range(length)%}
-    <div class="movies-list">
-        <div id=poster>
-            <img id="imgs" src="https://image.tmdb.org/t/p/w500{{dis_im[i]}}" alt="">
-        </div>
-        <span id="titles">{{dis_name[i]}}</span>
+<div class="discover-list">
+    <p style="color: white;font-size: 1.3rem;">What's Popular</p>
+    <div class="container-1">
+        {%for i in range(length)%}
+        <form role="link" action="{{url_for('movieinfo')}}" id="form-2" method="POST">
+            <a name="{{dis_name[i]}}" class="movies-list" href="{{url_for('movieinfo')}}" >
+                <div id=poster>
+                    <img id="imgs" src="https://image.tmdb.org/t/p/w500{{dis_im[i]}}" alt="">
+                </div>
+                <span id="titles">{{dis_name[i]}}</span>
+            </a>
+        </form>
+        {% endfor %}
     </div>
-    {% endfor %}
+</div>
+<div class="discover-list">    
+    <p style="color: white;font-size: 1.3rem;">Top Rated</p>
+    <div class="container-1">
+        {%for i in range(length)%}
+        <a class="movies-list" href="#">
+            <div id=poster>
+                <img id="imgs" src="https://image.tmdb.org/t/p/w500{{pop_im[i]}}" alt="">
+            </div>
+            <span id="titles">{{pop_name[i]}}</span>
+        </a>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
