@@ -7,18 +7,18 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 def cosinesim(name):
     df = pd.read_csv('model/features.csv')
-    cv = CountVectorizer()
-    count_matrix = cv.fit_transform(df['overview'])
-    sim = cosine_similarity(count_matrix)
+    cv = CountVectorizer(max_features = 5000, stop_words = 'english')
+    vectors = cv.fit_transform(df['tags']).toarray()
+    similarity = cosine_similarity(vectors)
     name = name.lower()
     df['title']=df['title'].str.lower()
     if name not in df['title'].unique():
         return ('Try Aboslute Spelling or it may not be in our database')
     else:
         i = df.loc[df['title']==name].index[0]
-        mov_id = list(enumerate(sim[i]))
+        mov_id = list(enumerate(similarity[i]))
         mov_id = sorted(mov_id,key = lambda x:x[1],reverse=True)
-        mov_id = mov_id[1:11]
+        mov_id = mov_id[0:11]
         rec_id = []
         for i in range(len(mov_id)):
             a = mov_id[i][0]
@@ -47,13 +47,26 @@ def movieinfo():
 def predict():
     movie_name = request.form.get('movie')
     cos_id = cosinesim(movie_name)
+    movie_id = cos_id[0]
+    movie_data = homefn.movie_info(movie_id)
+    cos_id = cos_id[1:]
     length = len(cos_id)
-    rec_im,rec_name = homefn.recommendations(cos_id) 
+    rec_im,rec_name = homefn.recommendations(cos_id)
     if type(cos_id)==type('str'):
-        return render_template('predict.html',length=length,movie_name=movie_name,rec_im=[''],rec_name=[''],message=cos_id)
+        return render_template('predict.html',length=length,movie_name=movie_name,
+        rec_im=[''],rec_name=[''],message=cos_id,movie_data={'':''},backdrop_path = "https://image.tmdb.org/t/p/original"+movie_data['backdrop_path'])
     else :
-        return render_template(
-            'predict.html',length=length,movie_name=movie_name,rec_im=rec_im,rec_name=rec_name,message='')
+        if type(movie_data['backdrop_path']) == type(None):
+            return render_template(
+                'predict.html',length=length,movie_name=movie_name,
+                rec_im=rec_im,rec_name=rec_name,movie_data=movie_data,message='',backdrop_path = "/static/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpeg",
+                mov_len=len(movie_data['genres']),poster_path = "/static/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpeg")
+        else:
+            return render_template(
+                'predict.html',length=length,movie_name=movie_name,
+                rec_im=rec_im,rec_name=rec_name,movie_data=movie_data,message='',backdrop_path = "https://image.tmdb.org/t/p/original"+movie_data['backdrop_path'],
+                mov_len=len(movie_data['genres']),
+                poster_path = "https://image.tmdb.org/t/p/original"+movie_data['poster_path'])
 
 
 if __name__ == '__main__':

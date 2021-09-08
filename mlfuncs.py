@@ -14,9 +14,10 @@ def cosinesim(name):
         i = df.loc[df['title']==name].index[0]
         mov_id = list(enumerate(sim[i]))
         mov_id = sorted(mov_id,key = lambda x:x[1],reverse=True)
+        act_id = mov_id[0]
         mov_id = mov_id[1:11]
         rec_id = []
         for i in range(len(mov_id)):
             a = mov_id[i][0]
             rec_id.append(df['id'][a])
-        return rec_id
+        return act_id,rec_id

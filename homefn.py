@@ -23,11 +23,11 @@ def discover():
     dis_data = json.loads(response)
     dis_im,dis_name=poster_list(dis_data)
     return dis_im,dis_name
-def tester():
-    response = requests.get('https://api.themoviedb.org/3/movie/latest?api_key=aa865550facea4479a134ae752aa82ef&language=en-US').text
-    dis_data = json.loads(response)
-    dis_im,dis_name=poster_list(dis_data)
-    return dis_im,dis_name
+    
+def movie_info(movie_id):
+    data = requests.get("https://api.themoviedb.org/3/movie/"+str(movie_id)+"?api_key="+apikey+"&language=en-US").text
+    json_data = json.loads(data)
+    return json_data
 
 def recommendations(movie_id):
     rec_im = []

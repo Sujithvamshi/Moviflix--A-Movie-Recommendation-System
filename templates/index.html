@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moviflix 2.0</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">>
+    <link rel="shortcut icon" href="/static/MFLogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,13 +18,16 @@
             font-family: 'Roboto', sans-serif;
         }
         body,html{
-            background-color: rgb(29, 10, 10);
+            background: rgb(0, 0, 0);
             margin:0;
             box-sizing: border-box;
         }
-        #nav-bar{
+        .nav-bar{
             width: 100%;
             height: 6rem;
+        }
+        html::-webkit-scrollbar{
+            display: none;
         }
         #link-main{
             position:absolute;
@@ -31,20 +36,28 @@
             transition: ease-in-out 0.4s ;
         }
         #link-main:hover{
-            filter: drop-shadow(0px 0px 15px rgb(160, 160, 160));
+            filter: drop-shadow(0px 0px 20px rgb(255, 193, 193));
         }
         .container-0{
             width: 100%;
+            margin: 6rem auto;
             text-align: center;
-            color: #fff;
+            color: white;
+            padding-bottom: 3rem;
+        }
+        .contain-head{
+            padding-top: 3rem;
         }
         .contain-search form{
-            background-color: #ffffff;
             margin: 0 auto;
             width: 400px;
             border-radius: 5px;
             display:flex;
+            background: rgb(255, 255, 255);
             align-items:center;
+        }
+        .contain-search:hover{
+            filter: drop-shadow(0px 0px 20px rgb(141, 141, 141));
         }
         .contain-search input{
             all: unset;
@@ -85,6 +98,7 @@
             display: flex;
             flex-direction: column;
             text-align: center;
+            text-decoration: none;
         }
         #poster{
             width: 160px;
@@ -102,10 +116,32 @@
             display: flex;
             flex-direction: column;
         }
+        .main-predict{
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 90%;
+            margin-top: 2rem;
+            padding:4rem 6rem 4rem 6rem;
+            display: flex;
+            flex-direction: row;
+            color: white;
+        }
+        #main-img{
+            width: 250px;
+        }
+        .main-info{
+            background-color: rgba(0, 0, 0, 0.753);
+            padding-top: 2rem;
+            padding-left:3rem ;
+            width: 80%;
+            display: flex;
+            flex-direction:column;
+        }
     </style>
 </head>
 <body>
-    <nav id="nav-bar">
+    <nav class="nav-bar">
         <a id="link-main" href="/">
             <img src="/static/new-logo.001.png" alt="" width="150px">
         </a>
@@ -114,6 +150,9 @@
         {% block content %}
         {% endblock %}
     </div>
+    <footer style="margin-top:5rem;color: white;width:100%;height: 10rem;text-align: center;">
+        A Project By Department Of Electronics And Communication Engineering Students Of BVRIT.
+    </footer>
     <script>
         getData();
         async function getData(){

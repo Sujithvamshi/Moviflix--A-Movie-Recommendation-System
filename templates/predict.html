@@ -1,17 +1,41 @@
 {% extends 'index.html' %}
 {% block content %}
-<div>
-
+<div class="contain-search" style="margin-left: 60%;top:3rem;position:fixed;"> 
+    <form role="search" action="{{url_for('predict')}}" class="form" method="POST">
+        <input name="movie" id="tags" type="text" placeholder="Search By Movie Name" required="required">
+        <button class="btn-form" type="submit" value="enter">
+          <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+        </button>
+      </form>
 </div>
-<p style="width: 100%;text-align: center;color: white;font-weight: lighter;font-size: 1.3rem;" >Here are Recommendations for {{movie_name}}</p>
-<div class="container-1">
-    {%for i in range(length)%}
-    <div class="movies-list">
-        <div id=poster>
-            <img id="imgs" src="https://image.tmdb.org/t/p/w500{{rec_im[i]}}" alt="">
+<div class="main-predict" style="background-image: url('{{backdrop_path}}')">
+    <img id="main-img" src="{{poster_path}}" alt="">
+    <div class="main-info">
+        <div>
+            <span style="font-size: 2rem;">{{movie_data['title']}}</span>
+            <span>({{movie_data['release_date'][:4]}})</span>
         </div>
-        <span id="titles">{{rec_name[i]}}</span>
+        <p style="font-size: 1.1rem;font-weight: lighter;">{{movie_data['tagline']}}</p>
+        <div style="display: flex;flex-direction: row;">
+            {% for i in range(mov_len) %}
+            <p style="font-weight:bolder;">{{movie_data['genres'][i]['name']}} &#8226;&nbsp;</p>
+            {% endfor %}
+            <p>{{movie_data['runtime']//60}}h {{movie_data['runtime']%60}}m</p>
+        </div>
+        <p style="padding-right: 3rem;">{{movie_data['overview']}}</p>
     </div>
-    {% endfor %}
+</div>
+<div class="discover-list">
+    <p style="width: 100%;color: white;font-weight: lighter;font-size: 1.3rem;" >Recommendations For {{movie_name}}</p>
+    <div class="container-1">
+        {%for i in range(length)%}
+        <div class="movies-list">
+            <div id=poster>
+                <img id="imgs" src="https://image.tmdb.org/t/p/w500{{rec_im[i]}}" alt="">
+            </div>
+            <span id="titles">{{rec_name[i]}}</span>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

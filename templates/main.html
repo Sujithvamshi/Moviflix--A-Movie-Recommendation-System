@@ -2,10 +2,10 @@
 {% block content %}
 <div class="container-0">
     <div class="contain-head">
-        <p style="font-size: 2rem;font-weight: lighter;">MoviFlix is a recommendation system based on Machine Learning</p>
+        <p style="font-size: 1.8rem;font-weight: lighter;">MoviFlix is a recommendation system based on Machine Learning</p>
     </div>
     <div class="contain-search"> 
-        <form role="search" action="{{url_for('predict')}}" id="form" method="POST">
+        <form role="search" action="{{url_for('predict')}}" class="form" method="POST">
             <input name="movie" id="tags" type="text" placeholder="Search By Movie Name" required="required">
             <button class="btn-form" type="submit" value="enter">
               <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
@@ -17,7 +17,7 @@
     <p style="color: white;font-size: 1.3rem;">What's Popular</p>
     <div class="container-1">
         {%for i in range(length)%}
-        <form role="link" action="{{url_for('movieinfo')}}" id="form-2" method="POST">
+        <form role="link" action="{{url_for('movieinfo')}}" class="form-2" method="POST">
             <a name="{{dis_name[i]}}" class="movies-list" href="{{url_for('movieinfo')}}" >
                 <div id=poster>
                     <img id="imgs" src="https://image.tmdb.org/t/p/w500{{dis_im[i]}}" alt="">
